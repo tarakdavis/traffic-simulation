@@ -13,6 +13,15 @@ class Car:
         self.position = np.array([position, position + self.size])
 
 # Car accelerates normally.
+    def __init__(self, max_speed=33.33, size=5, accel=2, location=0, slow_percentage=0.1, position):
+        self.max_speed = max_speed
+        self.size = size
+        self.accel = accel
+        self.location = location
+        self.slow_percentage = slow_percentage
+        self.position = np.array([position, position + 5])
+
+    #Car accelerates normally.
     def accelerate_car(self):
         self.speed += self.accel
 
@@ -28,9 +37,19 @@ class Car:
         if random.random() == self.slow_percentage:
             self.speed -= self.accel
 
+    """Car matches speed of car in front if about to hit."""
+    def is_car_close(self):
+        pass
+
+    # Car randomly slows 2 m/s at 10% chance
+    def is_car_slowing(self):
+        if random.random() == self.slow_percentage:
+            self.accel -= 2
+            return self.accel
+
 
 class Road:
-    def __init__(self, length=1000, cars=30, list_of_cars):
+    def __init__(length=1000, cars=30, list_of_cars=[]):
         self.length = length
         self.cars = cars
         self.list_of_cars = []
@@ -43,12 +62,9 @@ class Road:
             position += (self.length / self.cars)
         return self.list_of_cars
 
-    def position_car(self):
-
-
-
 class Simulation:
     def __init__(self, max_time=60):
         self.max_time = max_time
 
     def run_simulation():
+        pass
