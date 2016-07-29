@@ -32,10 +32,13 @@ class Road:
 
     """Place cars on road"""
     def populate_cars(self):
-        total_length = Car.size * self.cars
-        return round(self.length / total_lenth, 2)
+        position = 0
+        for _ in range(self.cars):
+            self.list_of_cars.append(Car(position))
+            position += (self.length / self.cars)
+        return self.list_of_cars
 
-    def position_car():
+    def position_car(self):
 
 
 
