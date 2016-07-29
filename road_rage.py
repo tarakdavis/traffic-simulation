@@ -11,21 +11,21 @@ class Car:
         self.location = location
         self.slow_percentage = slow_percentage
 
-    """Car accelerates normally."""
+    #Car accelerates normally.
     def accelerate_car(self):
-
+        
 
     """Car matches speed of car in front if about to hit."""
     def is_car_close(self):
-
-    """Car randomly slows 2 m/s at 10% chance"""
+        pass
+    #Car randomly slows 2 m/s at 10% chance
     def is_car_slowing(self):
-        if random.random() = self.slow_percentage
-            return self.accel -= 2
-
+        if random.random() == self.slow_percentage:
+            self.accel -= 2
+            return self.accel
 
 class Road:
-    def __init__(self, length=1000, cars=30, list_of_cars):
+    def __init__(length=1000, cars=30, list_of_cars = []):
         self.length = length
         self.cars = cars
         self.list_of_cars = []
@@ -36,7 +36,7 @@ class Road:
         return round(self.length / total_lenth, 2)
 
     def position_car():
-
+        self.position_car = 0
 
 
 class Simulation:
@@ -44,3 +44,4 @@ class Simulation:
         self.max_time = max_time
 
     def run_simulation():
+        pass
