@@ -5,13 +5,17 @@ import random
 
 
 class Car:
-    def __init__(self, position, car_in_front=None):
+    def __init__(self, position):
         self.max_speed = 33.33
         self.size = 5
         self.speed = 0
         self.accel = 2
         self.slow_percentage = 0.1
         self.position = np.array([position, position + self.size])
+        self.car_in_front = None
+
+    def __repr__(self):
+        return "position: {}, speed: {}".format(self.position, self.speed)
 
 # Car accelerates normally.
     def accelerate_car(self):
@@ -45,21 +49,33 @@ class Car:
 
 
 class Road:
-    def __init__(self, length=1000, cars=30, list_of_cars=[]):
+    def __init__(self, length=1000, cars=30):
         self.length = length
         self.cars = cars
         self.list_of_cars = []
 
-    """Place cars on road"""
+# Place cars on road.
     def populate_cars(self):
         position = 0
         for _ in range(self.cars):
             self.list_of_cars.append(Car(position))
             position += (self.length / self.cars)
-        return self.list_of_cars
 
+    def relative_car(self):
 
-def main():
-    max_time = 60
-    starting_positions = Road.populate_cars()
-    for seconds in max_time:
+# class Simulation:
+#     pass
+
+road = Road()
+road.populate_cars()
+print(road.list_of_cars)
+#
+# def main():
+#     time = 60
+#     speeds = []
+#     starting_positions = Road.populate_cars()
+#     for seconds in time:
+#
+#
+# if __name__ == '__main__':
+#     main()
