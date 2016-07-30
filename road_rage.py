@@ -37,6 +37,8 @@ class Car:
     def is_car_slowing(self):
         if random.random() == self.slow_percentage:
             self.decelerate_car()
+        else:
+            self.accelerate_car()
 
     def is_track_ending(self):
         self.position = (self.position + self.speed) % Road.length
@@ -57,12 +59,7 @@ class Road:
         return self.list_of_cars
 
 
-class Simulation:
-    def __init__(self, max_time=60):
-        self.max_time = max_time
-
-    def run_simulation():
-        pass
-
 def main():
+    max_time = 60
     starting_positions = Road.populate_cars()
+    for seconds in max_time:
