@@ -13,13 +13,13 @@ class Car:
         self.position = np.array([position, position + self.size])
 
 # Car accelerates normally.
-    def __init__(self, max_speed=33.33, size=5, accel=2, location=0, slow_percentage=0.1, position):
-        self.max_speed = max_speed
-        self.size = size
-        self.accel = accel
-        self.location = location
-        self.slow_percentage = slow_percentage
-        self.position = np.array([position, position + 5])
+    # def __init__(self, max_speed=33.33, size=5, accel=2, location=0, slow_percentage=0.1, position):
+    #     self.max_speed = max_speed
+    #     self.size = size
+    #     self.accel = accel
+    #     self.location = location
+    #     self.slow_percentage = slow_percentage
+    #     self.position = np.array([position, position + 5])
 
     #Car accelerates normally.
     def accelerate_car(self):
