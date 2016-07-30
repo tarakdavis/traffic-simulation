@@ -6,13 +6,13 @@ import random
 
 class Car:
     def __init__(self, position):
-        self.max_speed = 33.33
+        self.max_speed = 120
         self.size = 5
         self.speed = 0
         self.accel = 2
         self.slow_percentage = 0.1
         self.position = np.array([position, position + self.size])
-        self.car_in_front = None
+        #self.position =[]
 
     def __repr__(self):
         return "position: {}, speed: {}".format(self.position, self.speed)
@@ -25,27 +25,30 @@ class Car:
         self.speed -= self.accel
         if self.speed < 0:
             self.speed = 0
-
-    def is_car_speeding(self):
-        if self.speed >= self.max_speed:
-            self.speed <= self.max_speed
+        elif self.speed >= self.max_speed:
+            self.decelerate_car()
+        else:
+            self.accelerate_car()
 
 # Car matches speed of car in front if about to hit.
-    def is_car_in_front(self, car_in_front):
-        distance = car_in_front.position[0] - self.position[1]
+    def change_speed(self, other):
+        distance = other.position[0] - self.position[1]
         if distance <= self.speed:
-            if self.speed >= car_in_front.speed:
-                self.speed == car_in_front.speed
+            if self.speed >= other.speed:
+                self.speed == other.speed
+        else:
+            self.accelerate_car()
 
 # Car randomly slows 2 m/s at 10% chance
-    def is_car_slowing(self):
+    def random_slowdown(self):
         if random.random() == self.slow_percentage:
             self.decelerate_car()
         else:
             self.accelerate_car()
 
-    def is_track_ending(self):
-        self.position = (self.position + self.speed) % Road.length
+    def reset_track(self):
+        if self.position > Road.length:
+            self.position = self.position % Road.length
 
 
 class Road:
@@ -55,30 +58,31 @@ class Road:
         self.list_of_cars = []
 
 # Place cars on road.
+
     def populate_cars(self):
         position = 0
         for _ in range(self.cars):
             self.list_of_cars.append(Car(position))
             position += (self.length / self.cars)
 
-    #def relative_car(self):
 
+class Simulation:
+    def __init__(self):
+        self.time = 60
+        self.speeds = []
 
-# simulation = Simulation(Car())
-# print(simulation.run_simulation())
-# class Simulation:
-#     pass
-
+    def run_simulation(self):
+        for seconds in range(self.time):
+            for item in Road.list_of_cars:
+            # for index, items in enumerate range(road):
+                car = Car(Road.list_of_cars)
+                # car.change_speed()
+                # car.random_slowdown()
+                # car.decelerate_car()
+                self.speeds.append(car.speed)
+                print(car.position)
+                print(car.speeds)
 road = Road()
 road.populate_cars()
-print(road.list_of_cars)
-#
-# def main():
-#     time = 60
-#     speeds = []
-#     starting_positions = Road.populate_cars()
-#     for seconds in time:
-#
-#
-# if __name__ == '__main__':
-#     main()
+simulation = Simulation()
+#print(simulation.run_simulation())
