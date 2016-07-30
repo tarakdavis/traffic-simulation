@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import statistics
+# import matplotlib.pyplot as plt
+# import statistics
 import random
 
 
@@ -18,6 +18,11 @@ class Car:
         self.speed += self.accel
 
     def decelerate_car(self):
+        self.speed -= self.accel
+        if self.speed < 0:
+            self.speed = 0
+
+    def is_car_speeding(self):
         if self.speed >= self.max_speed:
             self.speed <= self.max_speed
 
@@ -31,7 +36,10 @@ class Car:
 # Car randomly slows 2 m/s at 10% chance
     def is_car_slowing(self):
         if random.random() == self.slow_percentage:
-            self.speed -= self.accel
+            self.decelerate_car()
+
+    def is_track_ending(self):
+        self.position = (self.position + self.speed) % Road.length
 
 
 class Road:
@@ -55,3 +63,6 @@ class Simulation:
 
     def run_simulation():
         pass
+
+def main():
+    starting_positions = Road.populate_cars()
