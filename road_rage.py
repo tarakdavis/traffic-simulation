@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics
+import random
 
 
 class Car:
@@ -13,17 +14,12 @@ class Car:
         self.position = np.array([position, position + self.size])
 
 # Car accelerates normally.
-    # def __init__(self, max_speed=33.33, size=5, accel=2, location=0, slow_percentage=0.1, position):
-    #     self.max_speed = max_speed
-    #     self.size = size
-    #     self.accel = accel
-    #     self.location = location
-    #     self.slow_percentage = slow_percentage
-    #     self.position = np.array([position, position + 5])
-
-    #Car accelerates normally.
     def accelerate_car(self):
         self.speed += self.accel
+
+    def decelerate_car(self):
+        if self.speed >= self.max_speed:
+            self.speed <= self.max_speed
 
 # Car matches speed of car in front if about to hit.
     def is_car_in_front(self, car_in_front):
@@ -37,19 +33,9 @@ class Car:
         if random.random() == self.slow_percentage:
             self.speed -= self.accel
 
-    """Car matches speed of car in front if about to hit."""
-    def is_car_close(self):
-        pass
-
-    # Car randomly slows 2 m/s at 10% chance
-    def is_car_slowing(self):
-        if random.random() == self.slow_percentage:
-            self.accel -= 2
-            return self.accel
-
 
 class Road:
-    def __init__(length=1000, cars=30, list_of_cars=[]):
+    def __init__(self, length=1000, cars=30, list_of_cars=[]):
         self.length = length
         self.cars = cars
         self.list_of_cars = []
@@ -61,6 +47,7 @@ class Road:
             self.list_of_cars.append(Car(position))
             position += (self.length / self.cars)
         return self.list_of_cars
+
 
 class Simulation:
     def __init__(self, max_time=60):
