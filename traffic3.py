@@ -1,6 +1,5 @@
 import numpy as np
 # import matplotlib.pyplot as plt
-# import statistics
 import random
 
 
@@ -12,7 +11,7 @@ class Car:
         self.accel = 2
         self.slow_percentage = 0.1
         self.position = np.array([position, position + self.size])
-        #self.position =[]
+        # self.position =[]
 
     def __repr__(self):
         return "position: {}, speed: {}".format(self.position, self.speed)
@@ -26,6 +25,8 @@ class Car:
         if self.speed < 0:
             self.speed = 0
         elif self.speed >= self.max_speed:
+            self.decelerate_car()
+        elif self.random_slowdown():
             self.decelerate_car()
         else:
             self.accelerate_car()
@@ -41,10 +42,8 @@ class Car:
 
 # Car randomly slows 2 m/s at 10% chance
     def random_slowdown(self):
-        if random.random() == self.slow_percentage:
-            self.decelerate_car()
-        else:
-            self.accelerate_car()
+        if random.random() <= self.slow_percentage:
+            return True
 
     def reset_track(self):
         if self.position > Road.length:
@@ -71,18 +70,28 @@ class Simulation:
         self.speeds = []
         self.road = road
 
+    def get_mean(self):
+        return np.mean(self.speeds)
+
+    def get_stdev(self):
+        return np.std(self.speeds)
+
     def run(self):
         for seconds in range(self.time):
-            for car in self.road.cars:
-                car.change_speed(road.cars[1])
-                car.random_slowdown()
-                # car.accelerate_car()
+            for index, car in enumerate(road.cars):
+                # car.random_slowdown()
                 car.decelerate_car()
+                car.change_speed(road.cars[index])
                 self.speeds.append(car.speed)
-                print(car.position, car.speed)
+                return self.speeds
+
+            mean = self.get_mean()
+            stdev = self.get_stdev()
+            speed_limit = int(round(mean + stdev))
+            return mean, stdev, speed_limit
+            print(self.speeds, mean, stdev, speed_limit)
 
 road = Road()
 road.populate_cars()
-#print(road.list_of_cars)
 simulation = Simulation(road)
 simulation.run()
