@@ -14,7 +14,7 @@ class Car:
         self.position = np.array([position, position + self.size])
 
     def __repr__(self):
-        return "position: {}, speed: {}".format(self.position, self.speed)
+        return "position: {}".format(self.position)
 
 # Car accelerates normally.
     def accelerate_car(self):
