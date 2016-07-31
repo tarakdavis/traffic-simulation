@@ -1,11 +1,12 @@
 import numpy as np
 # import matplotlib.pyplot as plt
 import random
+import statistics as st
 
 
 class Car:
     def __init__(self, position):
-        self.max_speed = 120
+        self.max_speed = 33.33333
         self.size = 5
         self.speed = 0
         self.accel = 2
@@ -22,33 +23,34 @@ class Car:
 
     def decelerate_car(self):
         self.speed -= self.accel
-        if self.speed < 0:
-            self.speed = 0
-        elif self.speed >= self.max_speed:
-            self.decelerate_car()
-        elif self.random_slowdown():
-            self.decelerate_car()
-        else:
-            self.accelerate_car()
+        # if self.speed < 0:
+        #     self.speed = 0
+        # elif self.speed >= self.max_speed:
+        #     self.decelerate_car()
+        # elif self.random_slowdown():
+        #     self.decelerate_car()
+        # else:
+        #     self.accelerate_car()
 
 # Car matches speed of car in front if about to hit.
-    def change_speed(self, other):
+    def is_car_close(self, other):
         distance = other.position[1] - self.position[0]
         if distance <= self.speed:
             if self.speed >= other.speed:
-                self.speed == other.speed
-        else:
-            self.accelerate_car()
+                return True
+
+    def match_speed(self, other):
+        self.speed == other.speed
 
 # Car randomly slows 2 m/s at 10% chance
-    def random_slowdown(self):
+    def is_random_slowdown(self):
         if random.random() <= self.slow_percentage:
             return True
 
-    def reset_track(self):
-        if self.position > Road.length:
-            self.position = self.position % Road.length
-
+    # def reset_track(self):
+    #     if self.position > Road.length:
+    #         self.position = self.position % Road.length
+    #
 
 class Road:
     def __init__(self, length=1000):
@@ -62,6 +64,8 @@ class Road:
         for _ in range(amount):
             self.cars.append(Car(position))
             position += (self.length / amount)
+            if position > self.length:
+                position = position % self.length
 
 
 class Simulation:
@@ -71,25 +75,36 @@ class Simulation:
         self.road = road
 
     def get_mean(self):
-        return np.mean(self.speeds)
+        return st.mean(self.speeds)
 
     def get_stdev(self):
-        return np.std(self.speeds)
+        return st.stdev(self.speeds)
 
     def run(self):
         for seconds in range(self.time):
             for index, car in enumerate(road.cars):
+                car.accelerate_car()
+                if car.speed >= car.max_speed:
+                    car.decelerate_car()
+                elif car.speed < 0:
+                    car.speed = 0
+                elif car.is_random_slowdown():
+                    car.decelerate_car()
+                # #else:
+                #     if car.is_car_close():
+                #         car.match_speed()
+                        # car.change_speed()
                 # car.random_slowdown()
-                car.decelerate_car()
-                car.change_speed(road.cars[index])
+                # car.decelerate_car()
+                # car.change_speed(road.cars[index])
                 self.speeds.append(car.speed)
-                return self.speeds
+                # return self.speeds
+        mean = self.get_mean()
+        stdev = self.get_stdev()
+        speed_limit = int(round(mean + stdev))
+        print(self.speeds, mean, stdev, speed_limit)
+        return self.speeds, mean, stdev, speed_limit
 
-            mean = self.get_mean()
-            stdev = self.get_stdev()
-            speed_limit = int(round(mean + stdev))
-            return mean, stdev, speed_limit
-            print(self.speeds, mean, stdev, speed_limit)
 
 road = Road()
 road.populate_cars()
