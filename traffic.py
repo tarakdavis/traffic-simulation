@@ -52,37 +52,38 @@ class Car:
 
 
 class Road:
-    def __init__(self, length=1000, cars=30):
+    def __init__(self, length=1000):
         self.length = length
-        self.cars = cars
-        self.list_of_cars = []
+        self.cars = []
 
 # Place cars on road.
 
-    def populate_cars(self):
+    def populate_cars(self, amount =30):
         position = 0
-        for _ in range(self.cars):
-            self.list_of_cars.append(Car(position))
-            position += (self.length / self.cars)
+        for _ in range(amount):
+            self.cars.append(Car(position))
+            position += (self.length / amount)
 
 
 class Simulation:
-    def __init__(self):
+    def __init__(self, road):
         self.time = 60
         self.speeds = []
+        self.road = road
 
-    def run_simulation(self):
+    def run(self):
         for seconds in range(self.time):
-            for item in Road.list_of_cars:
+            for car in self.road.cars:
             # for index, items in enumerate range(road):
-                car = Car(Road.list_of_cars)
-                # car.change_speed()
-                # car.random_slowdown()
-                # car.decelerate_car()
+                car.change_speed(other)
+                car.random_slowdown()
+                car.decelerate_car()
                 self.speeds.append(car.speed)
                 print(car.position)
-                print(car.speeds)
+                print(car.speed)
+
 road = Road()
 road.populate_cars()
-simulation = Simulation()
-#print(simulation.run_simulation())
+#print(road.list_of_cars)
+simulation = Simulation(road)
+simulation.run()
