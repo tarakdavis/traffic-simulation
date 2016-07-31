@@ -95,7 +95,7 @@ class Simulation:
 
 def main():
     car = Car(
-    simulation = Simulation(car)
+    simulation=Simulation(car)
     simulation.run_simulation(Car, Road)
 
 
