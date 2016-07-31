@@ -68,26 +68,31 @@ class Simulation:
     def get_stdev(self):
         return st.stdev(self.speeds)
 
-    def run(self):
+    def run(self, road):
         for seconds in range(self.time):
             for index, car in enumerate(road.cars):
                 car.accelerate_car()
-                if car.speed >= car.max_speed:
+                if car.is_random_slowdown():
                     car.decelerate_car()
-                elif car.speed < 0:
-                    car.speed = 0
-                elif car.is_random_slowdown():
+                elif car.speed >= car.max_speed:
                     car.decelerate_car()
                 elif car.is_car_close(road.cars[index]):
                     car.match_speed(road.cars[index])
+                elif car.speed < 0:
+                    car.speed = 0
                 self.speeds.append(car.speed)
         mean = self.get_mean()
         stdev = self.get_stdev()
         speed_limit = int(round(mean + stdev))
         print("Average Speed: {}, Standard Deviation: {}, Speed Limit: {}".format(mean, stdev, speed_limit))
-        print(self.speeds)
+        return self.speeds
 
-road = Road()
-road.populate_cars()
-simulation = Simulation(road)
-simulation.run()
+
+def main():
+    road = Road()
+    road.populate_cars()
+    simulation = Simulation(road)
+    simulation.run(road)
+
+if __name__ == '__main__':
+    main()
