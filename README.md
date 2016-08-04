@@ -19,3 +19,7 @@ Cars exiting the road start again at the beginning. This is to simulate a contin
 The optimal speed limit is one standard deviation above the mean speed. For ease of drivers, this will be rounded down to an integer.
 
 Included is a graph of traffic over time, showing traffic jams, as well as our recommendation for the speed limit.
+
+requirements.txt -- file contains necessary libraries to run 'traffic900.py' and 'Road-Rage.ipynb.'
+Road-Rage.ipynb -- contains visual representation of our findings from 'traffic900.py.'
+traffic900.py -- file contains code to run traffic simulation with assumptions listed above.
