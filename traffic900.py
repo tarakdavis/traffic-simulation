@@ -71,20 +71,33 @@ class Simulation:
     def run(self, road):
         for seconds in range(self.time):
             for index, car in enumerate(road.cars):
-                car.accelerate_car()
+                # tmp = car.speed
+
                 if car.is_random_slowdown():
                     car.decelerate_car()
-                elif car.speed >= car.max_speed:
+                    # print("random", seconds, tmp, car.speed)
+                else:
+                    car.accelerate_car()
+                    # print("accelerates", seconds, tmp, car.speed)
+
+                if car.speed >= car.max_speed:
                     car.decelerate_car()
-                elif car.is_car_close(road.cars[index]):
+                    # print("too high", seconds, tmp, car.speed)
+
+                if car.is_car_close(road.cars[index]):
                     car.match_speed(road.cars[index])
-                elif car.speed < 0:
+                    # print("matched", seconds, tmp, car.speed)
+
+                if car.speed < 0:
                     car.speed = 0
+
                 self.speeds.append(car.speed)
+
         mean = self.get_mean()
         stdev = self.get_stdev()
         speed_limit = int(round(mean + stdev))
         print("Average Speed: {}, Standard Deviation: {}, Speed Limit: {}".format(mean, stdev, speed_limit))
+        # print(self.speeds)
         return self.speeds
 
 
