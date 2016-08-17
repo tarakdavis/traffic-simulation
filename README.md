@@ -1,5 +1,11 @@
 # traffic-simulation
 
+How to run:
+In order to look at the traffic sim you just need to run Road-Rage.ipynb in any web browser.  If you are interested in the python classes then you need to run traffic900.py with python3.5. Note that requirements.txt -- file contains necessary libraries to run 'traffic900.py' and 'Road-Rage.ipynb.'
+
+
+
+Overview:
 Simulation of traffic on a road and to find the optimal speed limit for the road.
 
 We have a 1 kilometer section of road being built and do not know what the speed limit needs to be. Simulate 1 kilometer of road. Even though this road is not circular, it is treated as such in order to generate a continuous flow of traffic.
